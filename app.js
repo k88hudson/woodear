@@ -34,9 +34,23 @@ app.configure('development', function(){
 
 console.log( routes );
 
+//Config
+app.get('/js/config.js', function (req,res) {
+  res.set( "Content-Type", "application/javascript;charset=utf-8" );
+  res.render('config.js', {
+    config: JSON.stringify({
+      port: env.get("PORT"),
+      makeEndpoint: env.get("MAKE_ENDPOINT")
+    })
+  });
+});
+
 app.get('/', routes.page('index'));
-app.get('/home', routes.page('home'));
 app.get('/about', routes.page('about'));
+app.get('/pages/deep', routes.page('deep'));
+app.get('/custom1', routes.page('custom1'));
+
+app.get('/fancy', routes.page2('fancy'));
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
